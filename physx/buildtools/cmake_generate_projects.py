@@ -21,10 +21,10 @@ def cmakeExt():
 
 def filterPreset(presetName):
     winPresetFilter = ['win','uwp','ps4','switch','xboxone','android','crosscompile']
-    if sys.platform == 'win32':        
+    if sys.platform == 'win32':
         if any(presetName.find(elem) != -1 for elem in winPresetFilter):
             return True
-    else:        
+    else:
         if all(presetName.find(elem) == -1 for elem in winPresetFilter):
             return True
     return False
@@ -53,12 +53,12 @@ def noPresetProvided():
                 print('(' + str(counter) + ') ' + presetXml.get('name') +
                     '.user <--- ' + presetXml.get('comment'))
                 presetList.append(presetXml.get('name') + '.user')
-            counter = counter + 1            
+            counter = counter + 1
     # Fix Python 2.x.
-    try: 
+    try:
     	input = raw_input
-    except NameError: 
-    	pass    
+    except NameError:
+    	pass
     mode = int(input('Enter preset number: '))
     print('Running generate_projects.bat ' + presetList[mode])
     return presetList[mode]
@@ -177,28 +177,28 @@ class CMakePreset:
             outString = outString + ' -DTARGET_BUILD_PLATFORM=uwp'
             outString = outString + ' -DPX_OUTPUT_ARCH=x86'
             outString = outString + ' -DCMAKE_SYSTEM_NAME=WindowsStore'
-            outString = outString + ' -DCMAKE_SYSTEM_VERSION=10.0'            
+            outString = outString + ' -DCMAKE_SYSTEM_VERSION=10.0'
             return outString
         elif self.targetPlatform == 'uwp32':
             outString = outString + ' -AWin32'
             outString = outString + ' -DTARGET_BUILD_PLATFORM=uwp'
             outString = outString + ' -DPX_OUTPUT_ARCH=x86'
             outString = outString + ' -DCMAKE_SYSTEM_NAME=WindowsStore'
-            outString = outString + ' -DCMAKE_SYSTEM_VERSION=10.0'            
+            outString = outString + ' -DCMAKE_SYSTEM_VERSION=10.0'
             return outString
         elif self.targetPlatform == 'uwparm32':
             outString = outString + ' -AARM'
             outString = outString + ' -DTARGET_BUILD_PLATFORM=uwp'
             outString = outString + ' -DPX_OUTPUT_ARCH=arm'
             outString = outString + ' -DCMAKE_SYSTEM_NAME=WindowsStore'
-            outString = outString + ' -DCMAKE_SYSTEM_VERSION=10.0'            
+            outString = outString + ' -DCMAKE_SYSTEM_VERSION=10.0'
             return outString
         elif self.targetPlatform == 'uwparm64':
             outString = outString + ' -AARM64'
             outString = outString + ' -DTARGET_BUILD_PLATFORM=uwp'
             outString = outString + ' -DPX_OUTPUT_ARCH=arm'
             outString = outString + ' -DCMAKE_SYSTEM_NAME=WindowsStore'
-            outString = outString + ' -DCMAKE_SYSTEM_VERSION=10.0'            
+            outString = outString + ' -DCMAKE_SYSTEM_VERSION=10.0'
             return outString
         elif self.targetPlatform == 'ps4':
             outString = outString + ' -DTARGET_BUILD_PLATFORM=ps4'
@@ -261,6 +261,7 @@ class CMakePreset:
                     os.environ['PM_CMakeModules_PATH'] + \
                     '/linux/LinuxCrossToolchain.x86_64-unknown-linux-gnu.cmake'
             elif self.compiler == 'clang':
+                outString = outString + ' -DCMAKE_LIBRARY_ARCHITECTURE=x86_64-linux-gnu'
                 if os.environ.get('PM_clang_PATH') is not None:
                     outString = outString + ' -DCMAKE_C_COMPILER=' + \
                         os.environ['PM_clang_PATH'] + '/bin/clang'
